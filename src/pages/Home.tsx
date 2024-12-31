@@ -14,9 +14,12 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchWeather = async () => {
         try {
-          const location = await getLocation();
+          const location = await getLocation(); // Now includes locationName
+          console.log("Location details:", location);
+      
+          // Use the location name in the request to the weather API
           const response = await fetch(
-            `/.netlify/functions/get-weather?location=${location.latitude},${location.longitude}`
+            `/.netlify/functions/get-weather?location=${location.locationName}`
           );
       
           if (!response.ok) {
@@ -29,6 +32,7 @@ const Home: React.FC = () => {
           console.error("Error fetching weather data:", error);
         }
       };
+      
       
       
 
