@@ -5,8 +5,8 @@ interface StyleCardProps {
     name: string;
     description: string;
     type: string;
-    store_link: string;
     price_range: string;
+    store_link: string;
   };
 }
 
