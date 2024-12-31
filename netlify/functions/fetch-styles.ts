@@ -18,7 +18,7 @@ export const handler: Handler = async (event) => {
       1. Name
       2. Description
       3. Type (e.g., Tops, Bottoms, Shoes, Accessories, etc.)
-      4. Price range
+      4. Price range ensure to include this very important
       5. Store link very important should be real like amazon, hollister etc. and have for each item
 
       Image URL: ${imageUrl}
