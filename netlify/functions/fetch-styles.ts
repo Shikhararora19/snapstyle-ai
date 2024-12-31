@@ -13,19 +13,25 @@ export const handler: Handler = async (event) => {
 
   try {
     const prompt = `
-      Analyze this image: ${imageUrl}.
-      Suggest outfit ideas for the occasion: '${occasion}'. Provide:
-      - Clothing item name
-      - Description
-      - Type
-      - Image URL
-      - Store link (optional).
+      You are a virtual stylist. Based on the image at the URL provided below and the occasion described, suggest outfit ideas. 
+      The response should include the following for each outfit item:
+      1. Name
+      2. Description
+      3. Type (e.g., Tops, Bottoms, Shoes, Accessories, etc.)
+      4. Image URL (necessary for display)
+      5. Store link (necessary for display)
+
+      Image URL: ${imageUrl}
+      Occasion: '${occasion}'
+
+      If you cannot analyze the image, suggest generic outfit ideas for the given occasion.
+      Please ensure the response is structured as JSON and includes an array of items.
     `;
 
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
-        model: "gpt-4",
+        model: "gpt-4o-mini",
         messages: [{ role: "user", content: prompt }],
         temperature: 0.7,
       },
