@@ -23,10 +23,6 @@ const Results: React.FC = () => {
     getStyles();
   }, [imageUrl, occasion]);
   
-  if (styles.length === 0) {
-    return <p>No style recommendations available.</p>;
-  }
-
   if (loading) return <p>Loading styles...</p>;
 
   return (
