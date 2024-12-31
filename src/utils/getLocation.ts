@@ -12,7 +12,7 @@ export const getLocation = async (): Promise<{ latitude: number; longitude: numb
             // Reverse geocoding to get location name
             const apiKey = process.env.OPENCAGE_API_KEY;
             const response = await fetch(
-              `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`
+              `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=15f8ae7aa4904b13a933e7d771579cbf`
             );
   
             if (!response.ok) {
