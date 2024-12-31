@@ -20,6 +20,7 @@ export const getLocation = async (): Promise<{ latitude: number; longitude: numb
             }
   
             const data = await response.json();
+            console.log("Location data:", data);
             const locationName = data.results[0]?.formatted || "Unknown location";
   
             resolve({ latitude, longitude, locationName });
