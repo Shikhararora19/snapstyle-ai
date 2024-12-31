@@ -45,7 +45,7 @@ const Home: React.FC = () => {
       return;
     }
 
-    navigate("/results", { state: { imageUrl, occasion, weatherData } });
+    navigate("/results", { state: { imageUrl, occasion} });
   };
 
   return (
