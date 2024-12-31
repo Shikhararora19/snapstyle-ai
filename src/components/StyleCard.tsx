@@ -18,7 +18,7 @@ const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
       <p className="text-gray-600">{style.description}</p>
       <p className="text-sm text-gray-500">Type: {style.type}</p>
        
-
+      <a href = {style.link}>Buy</a>
       <p>price: {style.price}</p>
 
     </div>
