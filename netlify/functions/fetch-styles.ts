@@ -13,18 +13,18 @@ export const handler: Handler = async (event) => {
 
   try {
     const prompt = `
-      You are a virtual stylist. Based on the image at the URL provided below and the occasion described, suggest outfit ideas. 
+      You are a virtual stylist. Based on the image at the URL provided below and the occasion described, suggest multiple outfit ideas. 
       The response should include the following for each outfit item:
       1. Name
       2. Description
       3. Type (e.g., Tops, Bottoms, Shoes, Accessories, etc.)
-      4. Image URL (necessary for display)
-      5. Store link (necessary for display)
+      4. Price range
+      5. Store link very important should be real like amazon, hollister etc. and have for each item
 
       Image URL: ${imageUrl}
       Occasion: '${occasion}'
 
-      If you cannot analyze the image, suggest generic outfit ideas for the given occasion.
+      If you cannot analyze the image, suggest generic multiple outfit ideas for the given occasion ensuring you have a real store link.
       Please ensure the response is structured as a plain array of objects (not wrapped in JSON text).
     `;
 
@@ -47,6 +47,7 @@ export const handler: Handler = async (event) => {
     );
 
     const recommendations = response.data.choices[0].message.content;
+    console.log("Style Recommendations:", recommendations); // Log the response for debugging
 
     // Parse the response as JSON to ensure it is an array
     const items = JSON.parse(recommendations);
