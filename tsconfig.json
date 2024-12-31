@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "ESNext",
+      "strict": true,
+      "jsx": "react-jsx",
+      "moduleResolution": "Node",
+      "allowSyntheticDefaultImports": true,
+      "baseUrl": "./",
+      "paths": {
+        "@components/*": ["src/components/*"],
+        "@services/*": ["src/services/*"],
+        "@types/*": ["src/types/*"],
+        "@utils/*": ["src/utils/*"]
+      }
+    },
+    "include": ["src/**/*", "netlify/**/*"],
+    "exclude": ["node_modules"]
+  }
