@@ -8,11 +8,6 @@ export const getLocation = async (): Promise<{ latitude: number; longitude: numb
         async (position) => {
           const { latitude, longitude } = position.coords;
   
-          try {
-            const apiKey = process.env.OPENCAGE_API_KEY || "";
-            if (!apiKey) {
-              throw new Error("OpenCage API key is missing.");
-            }
   
             const response = await fetch(
               `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=15f8ae7aa4904b13a933e7d771579cbf`
