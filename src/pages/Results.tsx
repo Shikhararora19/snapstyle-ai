@@ -13,16 +13,19 @@ const Results: React.FC = () => {
     const getStyles = async () => {
       try {
         const recommendations = await fetchStyles(imageUrl, occasion);
-        setStyles(recommendations);
+        console.log("Fetched styles:", recommendations);
+        setStyles(recommendations.items || []); // Use fallback if `items` is undefined
       } catch (error) {
         console.error("Error fetching styles:", error);
-      } finally {
-        setLoading(false);
       }
     };
-
+  
     getStyles();
   }, [imageUrl, occasion]);
+  
+  if (styles.length === 0) {
+    return <p>No style recommendations available.</p>;
+  }
 
   if (loading) return <p>Loading styles...</p>;
 

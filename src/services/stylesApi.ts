@@ -1,4 +1,4 @@
-export const fetchStyles = async (imageUrl: string, occasion: string) => {
+export const fetchStyles = async (imageUrl: string, occasion: string): Promise<any> => {
     const response = await fetch("/.netlify/functions/fetch-styles", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -10,6 +10,7 @@ export const fetchStyles = async (imageUrl: string, occasion: string) => {
     }
   
     const data = await response.json();
-    return data.recommendations;
+    console.log("Styles API Response:", data); // Log the response for debugging
+    return data;
   };
   
