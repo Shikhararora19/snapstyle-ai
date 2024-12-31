@@ -20,32 +20,23 @@ const Results: React.FC = () => {
       navigate("/");
       return;
     }
-  
+
     const getStyles = async () => {
       try {
-        const recommendations = await fetchStyles(imageUrl, occasion);
-        console.log("Fetched styles:", recommendations);
-  
-        // Parse recommendations safely
-        let parsedRecommendations;
-        try {
-          parsedRecommendations = JSON.parse(recommendations.recommendations);
-        } catch (parseError) {
-          console.error("Error parsing recommendations JSON:", parseError);
-          parsedRecommendations = { outfits: [] }; // Fallback
-        }
-  
-        setStyles(parsedRecommendations.outfits || []);
+        const response = await fetchStyles(imageUrl, occasion);
+        console.log("Fetched styles:", response);
+
+        // Use items directly from the response
+        setStyles(response.items || []);
       } catch (error) {
         console.error("Error fetching styles:", error);
       } finally {
         setLoading(false);
       }
     };
-  
+
     getStyles();
   }, [imageUrl, occasion, navigate]);
-  
 
   if (loading) return <p>Loading styles...</p>;
 

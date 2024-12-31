@@ -25,14 +25,17 @@ export const handler: Handler = async (event) => {
       Occasion: '${occasion}'
 
       If you cannot analyze the image, suggest generic outfit ideas for the given occasion.
-      Please ensure the response is structured as JSON and includes an array of items.
+      Please ensure the response is structured as a plain array of objects (not wrapped in JSON text).
     `;
 
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
         model: "gpt-4o-mini",
-        messages: [{ role: "user", content: prompt }],
+        messages: [
+          { role: 'system', content: 'You are a fashion stylist.' },
+          { role: "user", content: prompt },
+        ],
         temperature: 0.7,
       },
       {
@@ -45,9 +48,12 @@ export const handler: Handler = async (event) => {
 
     const recommendations = response.data.choices[0].message.content;
 
+    // Parse the response as JSON to ensure it is an array
+    const items = JSON.parse(recommendations);
+
     return {
       statusCode: 200,
-      body: JSON.stringify({ recommendations }),
+      body: JSON.stringify({ items }), // Return the plain array
     };
   } catch (error) {
     console.error("Error fetching styles:", error);
