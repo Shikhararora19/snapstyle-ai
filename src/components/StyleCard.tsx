@@ -1,26 +1,30 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 interface StyleCardProps {
   style: {
     name: string;
     description: string;
     type: string;
-    link: string;
-    price: number;
+    store_link: string;
+    price_range: string;
   };
 }
 
 const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
   return (
-    <div className="p-4 border rounded shadow">
-      <h3 className="text-xl font-semibold">{style.name}</h3>
-      <p className="text-gray-600">{style.description}</p>
-      <p className="text-sm text-gray-500">Type: {style.type}</p>
-       
-      <a href = {style.link}>Buy</a>
-      <p>price: {style.price}</p>
-
+    <div className="p-4 border rounded shadow-md">
+      <h3 className="text-xl font-semibold mb-2">{style.name}</h3>
+      <p className="text-gray-600 mb-2">{style.description}</p>
+      <p className="text-sm text-gray-500 mb-2">Type: {style.type}</p>
+      <p className="text-sm text-gray-500 mb-2">Price: {style.price_range}</p>
+      <a
+        href={style.store_link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-500 hover:underline"
+      >
+        Buy Now
+      </a>
     </div>
   );
 };
