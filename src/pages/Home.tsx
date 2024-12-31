@@ -13,31 +13,29 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     const fetchWeather = async () => {
-        try {
-          const location = await getLocation(); // Now includes locationName
-          console.log("Location details:", location);
-      
-          // Use the location name in the request to the weather API
-          const response = await fetch(
-            `/.netlify/functions/get-weather?location=${location.locationName}`
-          );
-      
-          if (!response.ok) {
-            throw new Error("Failed to fetch weather data");
-          }
-      
-          const weather = await response.json(); // Parse JSON response
-          setWeatherData(weather);
-        } catch (error) {
-          console.error("Error fetching weather data:", error);
+      try {
+        const location = await getLocation(); // Includes city
+        console.log("Location details:", location);
+  
+        const response = await fetch(
+          `/.netlify/functions/get-weather?location=${location.locationName}`
+        );
+  
+        if (!response.ok) {
+          throw new Error("Failed to fetch weather data");
         }
-      };
-      
-      
-      
-
+  
+        const weather = await response.json(); // Parse JSON response
+        console.log("Weather data:", weather);
+        setWeatherData(weather);
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+      }
+    };
+  
     fetchWeather();
   }, []);
+  
 
   const handleGetStyles = () => {
     if (!imageUrl) {

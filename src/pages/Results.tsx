@@ -20,14 +20,21 @@ const Results: React.FC = () => {
       navigate("/");
       return;
     }
-
+  
     const getStyles = async () => {
       try {
         const recommendations = await fetchStyles(imageUrl, occasion);
         console.log("Fetched styles:", recommendations);
-
-        // Parse recommendations if needed
-        const parsedRecommendations = JSON.parse(recommendations.recommendations || "{}");
+  
+        // Parse recommendations safely
+        let parsedRecommendations;
+        try {
+          parsedRecommendations = JSON.parse(recommendations.recommendations);
+        } catch (parseError) {
+          console.error("Error parsing recommendations JSON:", parseError);
+          parsedRecommendations = { outfits: [] }; // Fallback
+        }
+  
         setStyles(parsedRecommendations.outfits || []);
       } catch (error) {
         console.error("Error fetching styles:", error);
@@ -35,9 +42,10 @@ const Results: React.FC = () => {
         setLoading(false);
       }
     };
-
+  
     getStyles();
   }, [imageUrl, occasion, navigate]);
+  
 
   if (loading) return <p>Loading styles...</p>;
 
