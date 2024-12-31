@@ -49,16 +49,10 @@ export const handler: Handler = async (event) => {
     const recommendations = response.data.choices[0].message.content;
     console.log("Style Recommendations:", recommendations); // Log the response for debugging
 
-    let sanitizedRecommendations = recommendations;
 
-    // Remove backticks and Markdown formatting if present
-    sanitizedRecommendations = sanitizedRecommendations.replace(/```json|```/g, "");
-
-    console.log("Sanitized Recommendations:", sanitizedRecommendations);
-    let items
-    // Parse the sanitized JSON
+    let items;
     try {
-      const items = JSON.parse(sanitizedRecommendations);
+      items = JSON.parse(recommendations);
     } catch (parseError) {
       console.error("Failed to parse recommendations:", parseError);
       return {
