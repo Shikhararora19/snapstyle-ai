@@ -21,7 +21,8 @@ export const handler: Handler = async (event) => {
       "https://api.openai.com/v1/chat/completions",
       {
         model: "gpt-4o-mini",
-        messages: [{ role: "user", content: prompt }],
+        messages: [{ role: "system", content: "You are a fashion stylist that extracts elements and colors from given images." },
+          { role: "user", content: prompt }],
         temperature: 0.7,
       },
       {
