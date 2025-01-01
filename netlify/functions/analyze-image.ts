@@ -29,7 +29,7 @@ export const handler: Handler = async (event) => {
         {
         role: "user",
         content: [
-          { type: "text", text: "You are an advanced image analysis AI. Based on the image URL provided, describe key visual elements such as Types of clothing, Colors, Patterns, and Styles. Please return your findings in a plain text format." },
+          { type: "text", text: "You are an advanced image analysis AI. Based on the image URL provided, describe key visual elements such as Types of clothing, Colors, Patterns, and Styles. Please return your findings in JSON format." },
           {
             type: "image_url",
             image_url: {
