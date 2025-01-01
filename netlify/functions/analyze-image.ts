@@ -34,8 +34,10 @@ export const handler: Handler = async (event) => {
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
-        model: "gpt-4o",
-        messages: [{ role: "user", content: prompt }],
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: "You are an advanced image analysis AI." },
+          { role: "user", content: prompt }],
         temperature: 0.7,
       },
       {
