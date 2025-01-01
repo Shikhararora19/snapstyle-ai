@@ -1,4 +1,3 @@
-// src/pages/Home.tsx
 import React, { useEffect, useState } from "react";
 import FileUpload from "./FileUpload";
 import WeatherWidget from "../components/WeatherWidget";
@@ -10,35 +9,25 @@ import { getLocation } from "../utils/getLocation";
 import LogoutButton from "../components/LogoutButton";
 
 const Home: React.FC = () => {
-  const [user] = useAuthState(auth); // Firebase authentication
+  const [user] = useAuthState(auth);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [occasion, setOccasion] = useState<string>("Casual");
   const [weatherData, setWeatherData] = useState<WeatherResponse | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch weather data based on user's location
     const fetchWeather = async () => {
       try {
-        const location = await getLocation(); // Includes city
-        console.log("Location details:", location);
-
+        const location = await getLocation();
         const response = await fetch(
           `/.netlify/functions/get-weather?location=${location.locationName}`
         );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch weather data");
-        }
-
-        const weather = await response.json(); // Parse JSON response
-        console.log("Weather data:", weather);
+        const weather = await response.json();
         setWeatherData(weather);
       } catch (error) {
         console.error("Error fetching weather data:", error);
       }
     };
-
     fetchWeather();
   }, []);
 
@@ -47,13 +36,14 @@ const Home: React.FC = () => {
       alert("Please upload an image first.");
       return;
     }
-
     navigate("/results", { state: { imageUrl, occasion } });
   };
 
   return (
-    <div className="flex flex-col items-center p-4">
-      <h1 className="text-4xl font-bold mb-4">SnapStyle AI</h1>
+    <div className="flex flex-col items-center p-6 bg-gradient-to-tr from-gray-100 to-blue-200 min-h-screen animate-fade-in">
+      <h1 className="text-5xl font-bold text-blue-700 mb-6 hover:text-blue-900 transition duration-300">
+        SnapStyle AI
+      </h1>
       {user ? (
         <>
           <p className="text-gray-700 mb-4">Logged in as: {user.email}</p>
@@ -61,14 +51,17 @@ const Home: React.FC = () => {
           <FileUpload setImageUrl={setImageUrl} />
           {weatherData && <WeatherWidget weather={weatherData} />}
           <div className="mt-4">
-            <label htmlFor="occasion" className="block text-gray-700 font-medium mb-2">
+            <label
+              htmlFor="occasion"
+              className="block text-gray-700 font-medium mb-2"
+            >
               Select an Occasion:
             </label>
             <select
               id="occasion"
               value={occasion}
               onChange={(e) => setOccasion(e.target.value)}
-              className="border p-2 rounded"
+              className="border p-3 rounded w-full focus:ring-2 focus:ring-blue-500"
             >
               <option value="Casual">Casual</option>
               <option value="Formal">Formal</option>
@@ -78,7 +71,7 @@ const Home: React.FC = () => {
           </div>
           <button
             onClick={handleGetStyles}
-            className="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600"
+            className="bg-blue-600 text-white px-6 py-3 mt-4 rounded-lg hover:bg-blue-700 transition duration-300"
           >
             Get Style Suggestions
           </button>
