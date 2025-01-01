@@ -29,7 +29,7 @@ export const handler: Handler = async (event) => {
         {
         role: "user",
         content: [
-          { type: "text", text: "You are an advanced image analysis AI. Based on the image URL provided, describe key visual elements such as Types of clothing, Colors, Patterns, and Styles. Please return your findings in a structured format in JSON that I can stringify and pass to the frontend." },
+          { type: "text", text: "You are an advanced image analysis AI. Based on the image URL provided, describe key visual elements such as Types of clothing, Colors, Patterns, and Styles. Please return your findings in a structured format in JSON." },
           {
             type: "image_url",
             image_url: {
@@ -44,6 +44,7 @@ export const handler: Handler = async (event) => {
 
     // Extract the content from the response
     const analysis = response.choices[0].message.content;
+    console.log("Image Analysis:", analysis); // Log the response for debugging
 
     return {
       statusCode: 200,

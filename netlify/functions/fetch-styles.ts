@@ -52,24 +52,26 @@ export const handler: Handler = async (event) => {
       }
     );
 
-    const recommendations = response.data.choices[0].message.content;
-    console.log("Style Recommendations:", recommendations); // Log the response for debugging
+  const analysis = response.data.choices[0].message.content;
 
+  // Sanitize the analyzed data
+  const sanitizedAnalysis = analysis.replace(/```json|```/g, "").trim();
 
-    let items;
-    try {
-      items = JSON.parse(recommendations);
+    let parsedAnalysis;
+  try {
+      parsedAnalysis = JSON.parse(sanitizedAnalysis);
+      console.log("Parsed analyzed image data:", parsedAnalysis);
     } catch (parseError) {
-      console.error("Failed to parse recommendations:", parseError);
+      console.error("Failed to parse analyzed image data:", parseError);
       return {
         statusCode: 500,
-        body: JSON.stringify({ error: "Invalid response format from OpenAI." }),
+        body: JSON.stringify({ error: "Invalid analyzed image data format." }),
       };
     }
 
-    return {
+  return {
       statusCode: 200,
-      body: JSON.stringify({ items }),
+      body: JSON.stringify({ parsedAnalysis }),
     };
   } catch (error) {
     if (axios.isAxiosError(error)) {
