@@ -27,26 +27,18 @@ export const handler: Handler = async (event) => {
           content: "You are an advanced image analysis AI.",
         },
         {
-          role: "user",
-          content: `
-            You are an advanced image analysis AI. Based on the image URL provided, describe key visual elements such as:
-            - Types of clothing (e.g., shirt, pants, jacket, etc.)
-            - Colors and patterns
-            - Styles (e.g., casual, formal, sporty, etc.)
-            - Any accessories visible (e.g., watch, glasses, bag, etc.)
-            - Environmental context (e.g., outdoor, indoor, sunny, rainy, etc.)
-            
-            Here is the image URL: ${imageUrl}
-
-            Please return your findings in a structured format like:
-            {
-              "clothing": [ { "type": "Shirt", "color": "Blue", "pattern": "Solid" } ],
-              "accessories": [ { "type": "Watch", "color": "Silver" } ],
-              "environment": { "context": "Outdoor", "weather": "Sunny" }
-            }
-          `,
-        },
-      ],
+        role: "user",
+        content: [
+          { type: "text", text: "You are an advanced image analysis AI. Based on the image URL provided, describe key visual elements such as Types of clothing, Colors, Patterns, and Styles. Please return your findings in a structured format like: { \"clothing\": [ { \"type\": \"Shirt\", \"color\": \"Blue\", \"pattern\": \"Solid\" } ], \"accessories\": [ { \"type\": \"Watch\", \"color\": \"Silver\" } ], \"environment\": { \"context\": \"Outdoor\", \"weather\": \"Sunny\" } }"},
+          {
+            type: "image_url",
+            image_url: {
+              "url": imageUrl,
+            },
+          },
+        ],
+      },
+    ],
       temperature: 0.7,
     });
 
