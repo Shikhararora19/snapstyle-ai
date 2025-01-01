@@ -12,51 +12,30 @@ export const handler: Handler = async (event) => {
   }
 
   try {
-    // Generate a textual prompt for GPT-4o-mini
-    const prompt = `
-      You are an advanced image analysis AI. Based on the image URL provided, describe key visual elements such as:
-      - Types of clothing (e.g., shirt, pants, jacket, etc.)
-      - Colors and patterns
-      - Styles (e.g., casual, formal, sporty, etc.)
-      - Any accessories visible (e.g., watch, glasses, bag, etc.)
-      - Environmental context (e.g., outdoor, indoor, sunny, rainy, etc.)
-
-      Here is the image URL: ${imageUrl}
-
-      Please return your findings in a structured format like:
+    const response = await axios.get(
+      `https://api.cloudinary.com/v1_1/dgsbnmnfu/image/upload`,
       {
-        "clothing": [ { "type": "Shirt", "color": "Blue", "pattern": "Solid" } ],
-        "accessories": [ { "type": "Watch", "color": "Silver" } ],
-        "environment": { "context": "Outdoor", "weather": "Sunny" }
-      }
-    `;
-
-    const response = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        model: "gpt-4o-mini",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.7,
-      },
-      {
+        params: {
+          public_id: imageUrl,
+          colors: true,
+        },
         headers: {
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.CLOUDINARY_API_KEY}`,
         },
       }
     );
 
-    const analysis = response.data.choices[0].message.content;
+    const dominantColors = response.data.colors;
 
     return {
       statusCode: 200,
-      body: analysis, // Pass the structured response to the frontend
+      body: JSON.stringify({ colors: dominantColors }),
     };
   } catch (error) {
-    console.error("Error analyzing image:", error);
+    console.error("Error fetching colors from Cloudinary:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Failed to analyze image." }),
+      body: JSON.stringify({ error: "Failed to fetch image metadata." }),
     };
   }
 };
