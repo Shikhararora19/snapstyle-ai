@@ -29,7 +29,7 @@ export const handler: Handler = async (event) => {
         {
         role: "user",
         content: [
-          { type: "text", text: "You are an advanced image analysis AI. Based on the image URL provided, describe key visual elements such as Types of clothing, Colors, Patterns, and Styles. Please return your findings in a structured format in JSON." },
+          { type: "text", text: "You are an advanced image analysis AI. Based on the image URL provided, describe key visual elements such as Types of clothing, Colors, Patterns, and Styles. Please return your findings in a plain text format." },
           {
             type: "image_url",
             image_url: {
@@ -46,9 +46,12 @@ export const handler: Handler = async (event) => {
     const analysis = response.choices[0].message.content;
     console.log("Image Analysis:", analysis); // Log the response for debugging
 
+    let sanitizedAnalysis = analysis ? analysis.replace(/```json|```/g, "").trim() : "";
+    console.log("Sanitized Analysis:", sanitizedAnalysis); // Log the sanitized response for debugging
+
     return {
       statusCode: 200,
-      body: JSON.stringify({ analysis }), // Pass the structured response to the frontend
+      body: JSON.stringify({ sanitizedAnalysis }), // Pass the structured response to the frontend
     };
   } catch (error) {
     console.error("Error analyzing image:", error);
