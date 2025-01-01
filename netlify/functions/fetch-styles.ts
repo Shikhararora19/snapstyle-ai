@@ -2,9 +2,7 @@ import { Handler } from "@netlify/functions";
 import axios from "axios";
 
 export const handler: Handler = async (event) => {
-  const { imageUrl, occasion, analyzedData, weather } = JSON.parse(
-    event.body || "{}"
-  );
+  const { imageUrl, occasion, analyzedData, weather } = JSON.parse(event.body || "{}");
 
   if (!imageUrl || !occasion || !analyzedData || !weather) {
     return {
@@ -15,23 +13,17 @@ export const handler: Handler = async (event) => {
 
   try {
     const prompt = `
-      You are a virtual stylist. Based on the uploaded image, occasion, weather, and analysis data, suggest multiple outfit ideas. 
-      Consider the following details:
-      1. Name of the outfit item
-      2. Description
-      3. Type (e.g., Tops, Bottoms, Shoes, Accessories, etc.)
-      4. Price range (important)
-      5. Store link (real links like Amazon, etc.)
-
-      Inputs:
-      - Image Analysis Data: ${JSON.stringify(analyzedData)}
-      - Occasion: '${occasion}'
+      Based on the following details, recommend suitable outfits:
+      - Analyzed Data: ${JSON.stringify(analyzedData)}
+      - Occasion: ${occasion}
       - Weather: ${JSON.stringify(weather)}
 
-      Generate suggestions for outfits that are comfortable and appropriate for the given weather and occasion. 
-      Ensure to include relevant links, price ranges, and details for each item.
-
-      Respond as an array of objects with the specified structure.
+      Provide recommendations as an array of objects with:
+      - Name
+      - Description
+      - Type (e.g., Tops, Bottoms)
+      - Price Range
+      - Store Link(ensure it is real store link like Amazon, Zara, H&M, etc.)
     `;
 
     const response = await axios.post(
@@ -39,7 +31,7 @@ export const handler: Handler = async (event) => {
       {
         model: "gpt-4o-mini",
         messages: [
-          { role: 'system', content: 'You are a fashion stylist that provides outfit recommendation based on weather, occasion and image.' },
+          { role: "system", content: "You are a virtual stylist that provides outfit inspos based on occasion, weather, image data." },
           { role: "user", content: prompt },
         ],
         temperature: 0.7,
@@ -52,33 +44,14 @@ export const handler: Handler = async (event) => {
       }
     );
 
-  const analysis = response.data.choices[0].message.content;
+    const recommendations = JSON.parse(response.data.choices[0].message.content);
 
-  // Sanitize the analyzed data
-  const sanitizedAnalysis = analysis.replace(/```json|```/g, "").trim();
-
-    let parsedAnalysis;
-  try {
-      parsedAnalysis = JSON.parse(sanitizedAnalysis);
-      console.log("Parsed analyzed image data:", parsedAnalysis);
-    } catch (parseError) {
-      console.error("Failed to parse analyzed image data:", parseError);
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: "Invalid analyzed image data format." }),
-      };
-    }
-
-  return {
+    return {
       statusCode: 200,
-      body: JSON.stringify({ parsedAnalysis }),
+      body: JSON.stringify({ items: recommendations }),
     };
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error("Error fetching styles:", error.response?.data || error.message);
-    } else {
-      console.error("Error fetching styles:", error);
-    }
+    console.error("Error fetching styles:", error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: "Failed to fetch style recommendations." }),

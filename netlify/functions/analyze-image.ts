@@ -1,10 +1,7 @@
 import { Handler } from "@netlify/functions";
 import OpenAI from "openai";
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export const handler: Handler = async (event) => {
   const { imageUrl } = JSON.parse(event.body || "{}");
@@ -12,46 +9,36 @@ export const handler: Handler = async (event) => {
   if (!imageUrl) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ error: "Image URL is required" }),
+      body: JSON.stringify({ error: "Image URL is required." }),
     };
   }
 
   try {
-    console.log("Analyzing image:", imageUrl);
-
     const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
+        { role: "system", content: "You are an advanced image analysis AI." },
         {
-          role: "system",
-          content: "You are an advanced image analysis AI.",
+          role: "user",
+          content: `Analyze the image at the following URL and describe clothing, accessories, colors, patterns, styles, and environment in JSON format:
+          URL: ${imageUrl}`,
         },
-        {
-        role: "user",
-        content: [
-          { type: "text", text: "You are an advanced image analysis AI. Based on the image URL provided, describe key visual elements such as Types of clothing, Colors, Patterns, and Styles. Please return your findings in JSON format." },
-          {
-            type: "image_url",
-            image_url: {
-              "url": imageUrl,
-            },
-          },
-        ],
-      },
-    ],
+      ],
       temperature: 0.7,
     });
 
-    // Extract the content from the response
-    const analysis = response.choices[0].message.content;
-    console.log("Image Analysis:", analysis); // Log the response for debugging
+    const content = response.choices[0].message?.content;
 
-    let sanitizedAnalysis = analysis ? analysis.replace(/```json|```/g, "").trim() : "";
-    console.log("Sanitized Analysis:", sanitizedAnalysis); // Log the sanitized response for debugging
+    if (!content) {
+      throw new Error("No content received from OpenAI.");
+    }
 
+    // Parse JSON content safely
+    const analysis = JSON.parse(content.replace(/```json|```/g, "").trim());
+    console.log("Image Analysis:", analysis);
     return {
       statusCode: 200,
-      body: JSON.stringify({ sanitizedAnalysis }), // Pass the structured response to the frontend
+      body: JSON.stringify({ analyzedData: analysis }),
     };
   } catch (error) {
     console.error("Error analyzing image:", error);

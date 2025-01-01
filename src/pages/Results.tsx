@@ -17,7 +17,7 @@ const Results: React.FC = () => {
       navigate("/");
       return;
     }
-
+  
     const getStyles = async () => {
       try {
         const response = await fetch("/.netlify/functions/fetch-styles", {
@@ -25,18 +25,24 @@ const Results: React.FC = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ imageUrl, occasion, analyzedData, weather }),
         });
+  
+        if (!response.ok) {
+          throw new Error("Failed to fetch styles.");
+        }
+  
         const data = await response.json();
         setStyles(data.items || []);
       } catch (error) {
         console.error("Error fetching styles:", error);
+        alert("Failed to load style suggestions.");
       } finally {
         setLoading(false);
       }
     };
-
+  
     getStyles();
   }, [imageUrl, occasion, analyzedData, weather, navigate]);
-
+  
   if (loading) return <p>Loading styles...</p>;
   if (styles.length === 0) return <p>No styles available. Please try again later.</p>;
 

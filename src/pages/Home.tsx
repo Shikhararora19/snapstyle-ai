@@ -39,14 +39,25 @@ const Home: React.FC = () => {
       return;
     }
     try {
-      const analysisResult = await analyzeImage(imageUrl);
-      console.log("Analysis result:", analysisResult);
-      setAnalyzedData(analysisResult); // Store analysis results
+      const response = await fetch("/.netlify/functions/analyze-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ imageUrl }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to analyze image.");
+      }
+  
+      const { analyzedData } = await response.json();
+      setAnalyzedData(analyzedData);
+      alert("Image analysis completed successfully!");
     } catch (error) {
       console.error("Error analyzing image:", error);
-      alert("Failed to analyze the image.");
+      alert("Image analysis failed.");
     }
   };
+  
 
   const handleGetStyles = () => {
     if (!imageUrl || !analyzedData) {
