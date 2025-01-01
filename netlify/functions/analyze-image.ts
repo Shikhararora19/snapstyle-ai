@@ -13,14 +13,11 @@ export const handler: Handler = async (event) => {
 
   try {
     const response = await axios.get(
-      `https://api.cloudinary.com/v1_1/dgsbnmnfu/image/upload`,
+      `https://api.cloudinary.com/v1_1/dgsbnmnfu/resources/image/upload`,
       {
         params: {
-          public_id: imageUrl,
-          colors: true,
-        },
-        headers: {
-          Authorization: `Bearer ${process.env.CLOUDINARY_API_KEY}`,
+          public_ids: imageUrl, // Public ID of the image
+          colors: true, // Request colors metadata
         },
       }
     );
