@@ -4,21 +4,29 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Results from "./pages/Results";
 import ProtectedRoute from "./ProtectedRoute";
 
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Signup />} />
         <Route
-          path="/"
+          path="/home"
           element={
             <ProtectedRoute>
               <Home />
             </ProtectedRoute>
           }
+        />
+        <Route path="results"
+            element={
+                <ProtectedRoute>
+                <Results />
+                </ProtectedRoute>
+            }
         />
       </Routes>
     </Router>
