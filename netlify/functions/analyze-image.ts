@@ -7,22 +7,35 @@ export const handler: Handler = async (event) => {
   if (!imageUrl) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ error: "Image URL is required." }),
+      body: JSON.stringify({ error: "Image URL is required" }),
     };
   }
 
   try {
+    // Generate a textual prompt for GPT-4o-mini
     const prompt = `
-      Analyze this image: ${imageUrl}.
-      Provide a list of fashion elements or items observed in the image.
+      You are an advanced image analysis AI. Based on the image URL provided, describe key visual elements such as:
+      - Types of clothing (e.g., shirt, pants, jacket, etc.)
+      - Colors and patterns
+      - Styles (e.g., casual, formal, sporty, etc.)
+      - Any accessories visible (e.g., watch, glasses, bag, etc.)
+      - Environmental context (e.g., outdoor, indoor, sunny, rainy, etc.)
+
+      Here is the image URL: ${imageUrl}
+
+      Please return your findings in a structured format like:
+      {
+        "clothing": [ { "type": "Shirt", "color": "Blue", "pattern": "Solid" } ],
+        "accessories": [ { "type": "Watch", "color": "Silver" } ],
+        "environment": { "context": "Outdoor", "weather": "Sunny" }
+      }
     `;
 
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
         model: "gpt-4o-mini",
-        messages: [{ role: "system", content: "You are a fashion stylist that extracts elements and colors from given images." },
-          { role: "user", content: prompt }],
+        messages: [{ role: "user", content: prompt }],
         temperature: 0.7,
       },
       {
@@ -37,7 +50,7 @@ export const handler: Handler = async (event) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ analysis }),
+      body: analysis, // Pass the structured response to the frontend
     };
   } catch (error) {
     console.error("Error analyzing image:", error);
