@@ -19,7 +19,7 @@ export const handler: Handler = async (event) => {
       2. description (string)
       3. type (string, e.g., "Tops", "Shoes")
       4. price_range (string, e.g., "$20 - $50")
-      5. store_link (string, a valid store URL like Amazon, Nike, etc.)
+      5. store_link (string, a valid store URL like Amazon, Nike, etc.) just ensure that the link is valid
 
       Image URL: ${imageUrl}
       Occasion: '${occasion}'
