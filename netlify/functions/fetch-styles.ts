@@ -27,7 +27,7 @@ export const handler: Handler = async (event) => {
       - Description
       - Type (e.g., Tops, Bottoms)
       - Price Range
-      - Store Link
+      - Store Link(make sure these are real store links like H&M, Zara, etc.)
       The response should be in JSON format.
     `;
 

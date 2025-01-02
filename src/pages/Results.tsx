@@ -53,10 +53,17 @@ const Results: React.FC = () => {
       <h1 className="text-2xl font-bold mb-4">Style Recommendations</h1>
       {weather && <WeatherWidget weather={weather} />} {/* Show weather */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {styles.map((style, index) => (
-          <StyleCard key={index} style={style} />
-        ))}
+  {styles.map((style, index) => (
+    style.name && style.type && style.price_range && style.store_link ? (
+      <StyleCard key={index} style={style} />
+    ) : (
+      <div key={index} className="p-4 border rounded shadow">
+        <p className="text-red-500">Invalid style data</p>
       </div>
+    )
+  ))}
+</div>
+
     </div>
   );
 };
