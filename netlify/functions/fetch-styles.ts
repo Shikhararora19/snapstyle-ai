@@ -51,10 +51,21 @@ export const handler: Handler = async (event) => {
 
     console.log("OpenAI Response:", response.data);
 
-    // Safely parse the response content
+    // Sanitize and parse the response
     let recommendations;
     try {
-      recommendations = JSON.parse(response.data.choices[0].message.content);
+      const rawContent = response.data.choices[0].message.content;
+
+      // Remove Markdown formatting or unwanted characters
+      const sanitizedContent = rawContent
+        .replace(/```json/g, "") // Remove any Markdown JSON code blocks
+        .replace(/```/g, "") // Remove ending Markdown code blocks
+        .trim();
+
+      console.log("Sanitized Content:", sanitizedContent);
+
+      // Parse the sanitized JSON content
+      recommendations = JSON.parse(sanitizedContent);
     } catch (parseError) {
       console.error("Error parsing OpenAI response:", response.data.choices[0].message.content);
       return {
@@ -68,7 +79,11 @@ export const handler: Handler = async (event) => {
       body: JSON.stringify({ items: recommendations }),
     };
   } catch (error) {
-    console.error("Error in fetch-styles handler:", error.response?.data || error.message || error);
+    if (axios.isAxiosError(error)) {
+      console.error("Error in fetch-styles handler:", error.response?.data || error.message);
+    } else {
+      console.error("Error in fetch-styles handler:", error);
+    }
     return {
       statusCode: 500,
       body: JSON.stringify({ error: "Failed to fetch style recommendations." }),
