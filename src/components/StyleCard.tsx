@@ -9,13 +9,13 @@ interface StyleCardProps {
     description: string;
     type: string;
     price: string;
+    image?: string; // Optional image property
   };
 }
 
 const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
   const [image, setImage] = useState<string | null>(null);
   const [user] = useAuthState(auth);
-
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -39,20 +39,29 @@ const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
 
     fetchImage();
   }, [style.name]);
+
   const handleAddToCart = async () => {
     if (user) {
-      await addToCart(user.uid, style);
+      const itemWithImage = {
+        ...style,
+        image: image || "", // Assign the fetched image URL to the item
+      };
+
+      await addToCart(user.uid, itemWithImage);
       alert("Added to cart!");
     } else {
       alert("Please log in to add items to your cart.");
     }
   };
 
-
   return (
     <div className="p-4 border rounded shadow-md hover:shadow-lg transition-shadow duration-300">
       {image ? (
-        <img src={image} alt={style.name} className="w-full h-48 object-cover mb-4 rounded" />
+        <img
+          src={image}
+          alt={style.name}
+          className="w-full h-48 object-cover mb-4 rounded"
+        />
       ) : (
         <div className="w-full h-48 bg-gray-200 flex items-center justify-center rounded mb-4">
           <p className="text-gray-500">Loading image...</p>
