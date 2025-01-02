@@ -1,5 +1,6 @@
 import React from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { useNavigate } from "react-router-dom";
 
 interface CheckoutFormProps {
   totalAmount: number;
@@ -8,6 +9,7 @@ interface CheckoutFormProps {
 const CheckoutForm: React.FC<CheckoutFormProps> = ({ totalAmount }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -34,12 +36,14 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ totalAmount }) => {
       if (paymentResult.error) {
         console.error("Payment failed:", paymentResult.error.message);
         alert("Payment failed!");
+        navigate("/payment-failure"); // Navigate to the failure page
       } else {
         alert("Payment succeeded!");
-        window.location.href = "/payment-success";
+        navigate("/payment-success"); // Navigate to the success page
       }
     } catch (error) {
       console.error("Error processing payment:", error);
+      navigate("/payment-failure"); // Navigate to the failure page on error
     }
   };
 
