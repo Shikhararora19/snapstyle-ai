@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { addToCart } from "../firebase/cartService";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase-config";
 
 interface StyleCardProps {
@@ -13,6 +14,8 @@ interface StyleCardProps {
 
 const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
   const [image, setImage] = useState<string | null>(null);
+  const [user] = useAuthState(auth);
+
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -36,6 +39,15 @@ const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
 
     fetchImage();
   }, [style.name]);
+  const handleAddToCart = async () => {
+    if (user) {
+      await addToCart(user.uid, style);
+      alert("Added to cart!");
+    } else {
+      alert("Please log in to add items to your cart.");
+    }
+  };
+
 
   return (
     <div className="p-4 border rounded shadow-md hover:shadow-lg transition-shadow duration-300">
@@ -51,19 +63,11 @@ const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
       <p className="text-sm text-gray-500 mb-2">Type: {style.type}</p>
       <p className="text-sm text-gray-500 mb-4">Price: {style.price}</p>
       <button
-        onClick={async () => {
-            const user = auth.currentUser;
-            if (user) {
-            await addToCart(user.uid, style);
-            alert(`${style.name} added to cart!`);
-            } else {
-            alert("Please log in to add items to your cart.");
-            }
-        }}
-        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-        >
+        onClick={handleAddToCart}
+        className="bg-green-500 text-white px-4 py-2 mt-2 rounded hover:bg-green-600"
+      >
         Add to Cart
-        </button>
+      </button>
     </div>
   );
 };

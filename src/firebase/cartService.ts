@@ -7,15 +7,6 @@ export const addToCart = async (userId: string, item: any) => {
   const cartSnap = await getDoc(cartRef);
 
   if (cartSnap.exists()) {
-    // Check if item already exists in the cart
-    const existingItems = cartSnap.data().items || [];
-    const itemExists = existingItems.some((cartItem: any) => cartItem.name === item.name);
-
-    if (itemExists) {
-      console.warn("Item already in the cart. Consider updating the quantity instead.");
-      return;
-    }
-
     await updateDoc(cartRef, {
       items: arrayUnion({ ...item, quantity: 1 }),
     });
@@ -36,6 +27,7 @@ export const getCartItems = async (userId: string) => {
   }
   return [];
 };
+
 
 // Remove item from cart
 export const removeFromCart = async (userId: string, itemName: string) => {
