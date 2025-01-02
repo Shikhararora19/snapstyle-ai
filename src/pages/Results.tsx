@@ -54,7 +54,7 @@ const Results: React.FC = () => {
       {weather && <WeatherWidget weather={weather} />} {/* Show weather */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
   {styles.map((style, index) => (
-    style.name && style.type && style.price_range && style.store_link ? (
+    style.name && style.type && style.price && style.store_link ? (
       <StyleCard key={index} style={style} />
     ) : (
       <div key={index} className="p-4 border rounded shadow">

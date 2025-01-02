@@ -22,7 +22,7 @@ export const handler: Handler = async (event) => {
       - "Name" (string): Name of the item.
       - "Description" (string): A short description of the item.
       - "Type" (string): The category (e.g., Tops, Bottoms, Accessories, etc.).
-      - "Price Range" (string): Price range in USD.
+      - "Price" (string): Price in USD.
       - "Store Link" (string): A valid URL to purchase the item.
 
       Respond with **only the JSON array**, nothing else.
@@ -64,7 +64,7 @@ export const handler: Handler = async (event) => {
         name: item.Name || "Unknown Name",
         description: item.Description || "No description available.",
         type: item.Type || "Unknown Type",
-        price_range: item["Price Range"] || "Price not specified.",
+        price: item["Price"] || "Price not specified.",
         store_link: item["Store Link"] || "#",
       }));
     } catch (error) {
