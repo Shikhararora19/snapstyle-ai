@@ -1,6 +1,6 @@
 import React from "react";
 
-interface CartItemProps {
+export interface CartItemProps {
   item: {
     name: string;
     price: string;
