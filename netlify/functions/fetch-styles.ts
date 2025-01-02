@@ -2,16 +2,21 @@ import { Handler } from "@netlify/functions";
 import axios from "axios";
 
 export const handler: Handler = async (event) => {
-  const { imageUrl, occasion, analyzedData, weather } = JSON.parse(event.body || "{}");
+  try {
+    const { imageUrl, occasion, analyzedData, weather } = JSON.parse(event.body || "{}");
 
-  if (!imageUrl || !occasion || !analyzedData || !weather) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: "Missing required fields." }),
-    };
-  }
+    // Validate inputs
+    if (!imageUrl || !occasion || !analyzedData || !weather) {
+      console.error("Missing required fields:", { imageUrl, occasion, analyzedData, weather });
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "Missing required fields." }),
+      };
+    }
 
-  const prompt = `
+    console.log("Received Payload:", { imageUrl, occasion, analyzedData, weather });
+
+    const prompt = `
       You are a virtual stylist. Based on the following details, recommend suitable outfits:
       - Analyzed Data: ${JSON.stringify(analyzedData, null, 2)}
       - Occasion: ${occasion}
@@ -26,36 +31,47 @@ export const handler: Handler = async (event) => {
       The response should be in JSON format.
     `;
 
-  try {
-      const response = await axios.post(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          model: "gpt-4o-mini",
-          messages: [
-            { role: "system", content: "You are a virtual stylist." },
-            { role: "user", content: prompt },
-          ],
-          temperature: 0.7,
+    const response = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: "You are a virtual stylist." },
+          { role: "user", content: prompt },
+        ],
+        temperature: 0.7,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
         },
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      }
+    );
 
-      const recommendations = JSON.parse(response.data.choices[0].message.content);
+    console.log("OpenAI Response:", response.data);
 
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ items: recommendations }),
-      };
-    } catch (error) {
-      console.error("Error fetching styles:", error);
+    // Safely parse the response content
+    let recommendations;
+    try {
+      recommendations = JSON.parse(response.data.choices[0].message.content);
+    } catch (parseError) {
+      console.error("Error parsing OpenAI response:", response.data.choices[0].message.content);
       return {
         statusCode: 500,
-        body: JSON.stringify({ error: "Failed to fetch style recommendations." }),
+        body: JSON.stringify({ error: "Failed to parse OpenAI response." }),
       };
     }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ items: recommendations }),
+    };
+  } catch (error) {
+    console.error("Error in fetch-styles handler:", error.response?.data || error.message || error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Failed to fetch style recommendations." }),
+    };
   }
+};
