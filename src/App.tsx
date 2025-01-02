@@ -7,6 +7,8 @@ import Signup from "./pages/Signup";
 import Results from "./pages/Results";
 import Cart from "./components/Cart";
 import ProtectedRoute from "./ProtectedRoute";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentFailure from "./pages/PaymentFailure";
 import './index.css'; // Adjust path as per your project structure
 
 
@@ -34,6 +36,16 @@ const App: React.FC = () => {
         <Route path="/cart" element={
             <ProtectedRoute>
                 <Cart />
+            </ProtectedRoute>
+        } />
+        <Route path='/payment-success' element={
+            <ProtectedRoute>
+                <PaymentSuccess />
+            </ProtectedRoute>
+        } />
+        <Route path='/payment-failure' element={
+            <ProtectedRoute>
+                <PaymentFailure />
             </ProtectedRoute>
         } />
       </Routes>
