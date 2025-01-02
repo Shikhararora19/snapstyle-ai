@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { addToCart } from "../firebase/cartService";
+import { auth } from "../firebase/firebase-config";
 
 interface StyleCardProps {
   style: {
@@ -49,10 +51,19 @@ const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
       <p className="text-sm text-gray-500 mb-2">Type: {style.type}</p>
       <p className="text-sm text-gray-500 mb-4">Price: {style.price}</p>
       <button
-        className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md transform transition duration-300 hover:bg-blue-700 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-      >
+        onClick={async () => {
+            const user = auth.currentUser;
+            if (user) {
+            await addToCart(user.uid, style);
+            alert(`${style.name} added to cart!`);
+            } else {
+            alert("Please log in to add items to your cart.");
+            }
+        }}
+        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+        >
         Add to Cart
-      </button>
+        </button>
     </div>
   );
 };

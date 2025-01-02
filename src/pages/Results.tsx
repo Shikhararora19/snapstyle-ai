@@ -62,6 +62,13 @@ const Results: React.FC = () => {
       </div>
     )
   ))}
+    <button
+            onClick={() => navigate("/cart")}
+            className="bg-blue-500 text-white px-6 py-3 mt-4 rounded-lg hover:bg-blue-600"
+            >
+    View Cart
+    </button>
+
 </div>
 
     </div>

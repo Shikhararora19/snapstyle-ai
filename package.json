@@ -17,6 +17,7 @@
     "cloudinary": "^2.5.1",
     "dotenv": "^16.4.7",
     "firebase": "^11.1.0",
+    "mongoose": "^8.9.3",
     "netlify-lambda": "^2.0.16",
     "openai": "^4.77.0",
     "postcss": "^8.4.49",
