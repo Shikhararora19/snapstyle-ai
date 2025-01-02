@@ -14,7 +14,7 @@ const Results: React.FC = () => {
   useEffect(() => {
     if (!imageUrl || !occasion || !analyzedData || !weather) {
       alert("Missing required data. Redirecting to Home.");
-      navigate("/");
+      navigate("/Home");
       return;
     }
   
@@ -31,6 +31,7 @@ const Results: React.FC = () => {
         }
   
         const data = await response.json();
+        console.log("Fetched Styles:", data.items);
         setStyles(data.items || []);
       } catch (error) {
         console.error("Error fetching styles:", error);
@@ -42,6 +43,7 @@ const Results: React.FC = () => {
   
     getStyles();
   }, [imageUrl, occasion, analyzedData, weather, navigate]);
+  
   
   if (loading) return <p>Loading styles...</p>;
   if (styles.length === 0) return <p>No styles available. Please try again later.</p>;

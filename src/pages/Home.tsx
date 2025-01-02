@@ -68,6 +68,13 @@ const Home: React.FC = () => {
       alert("Weather data is not available. Please wait or reload the page.");
       return;
     }
+    console.log("Navigating to results with data:", {
+        imageUrl,
+        occasion,
+        analyzedData,
+        weather: weatherData,
+      });
+    
     navigate("/results", {
       state: {
         imageUrl,
