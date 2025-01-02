@@ -27,7 +27,7 @@ export const handler: Handler = async (event) => {
       - Description
       - Type (e.g., Tops, Bottoms)
       - Price Range
-      - Store Link(make sure these are real store links like H&M, Zara, etc.)
+      - Store Link (make sure these are real store links like H&M, Zara, etc.)
       The response should be in JSON format.
     `;
 
@@ -51,7 +51,7 @@ export const handler: Handler = async (event) => {
 
     console.log("OpenAI Response:", response.data);
 
-    // Sanitize and parse the response
+    // Declare recommendations in the outer scope
     let recommendations;
     try {
       const rawContent = response.data.choices[0].message.content;
@@ -65,7 +65,7 @@ export const handler: Handler = async (event) => {
       console.log("Sanitized Content:", sanitizedContent);
 
       // Parse the sanitized JSON content
-      const recommendations = JSON.parse(sanitizedContent).map((item: any) => ({
+      recommendations = JSON.parse(sanitizedContent).map((item: any) => ({
         name: item.Name,
         description: item.Description,
         type: item.Type,
