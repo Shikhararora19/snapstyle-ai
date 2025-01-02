@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Results from "./pages/Results";
-import Cart from "@components/Cart";
+import Cart from "./components/Cart";
 import ProtectedRoute from "./ProtectedRoute";
 import './index.css'; // Adjust path as per your project structure
 
