@@ -65,7 +65,13 @@ export const handler: Handler = async (event) => {
       console.log("Sanitized Content:", sanitizedContent);
 
       // Parse the sanitized JSON content
-      recommendations = JSON.parse(sanitizedContent);
+      const recommendations = JSON.parse(sanitizedContent).map((item: any) => ({
+        name: item.Name,
+        description: item.Description,
+        type: item.Type,
+        price_range: item["Price Range"],
+        store_link: item["Store Link"],
+      }));
     } catch (parseError) {
       console.error("Error parsing OpenAI response:", response.data.choices[0].message.content);
       return {
