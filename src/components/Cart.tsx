@@ -1,39 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { auth } from "../firebase/firebase-config";
-import { getCartItems } from "../firebase/cartService";
+import { getCartItems, removeFromCart } from "../firebase/cartService";
+import CartItem from "./CartItem";
 
 const Cart: React.FC = () => {
   const [cartItems, setCartItems] = useState<any[]>([]);
   const user = auth.currentUser;
 
   useEffect(() => {
-    const fetchCart = async () => {
+    const fetchCartItems = async () => {
       if (user) {
         const items = await getCartItems(user.uid);
         setCartItems(items);
       }
     };
-    fetchCart();
+    fetchCartItems();
   }, [user]);
 
+  const handleRemoveItem = async (item: any) => {
+    if (user) {
+      await removeFromCart(user.uid, item);
+      setCartItems((prev) => prev.filter((cartItem) => cartItem !== item));
+    }
+  };
+
   return (
-    <div className="p-4">
+    <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
-      {cartItems.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {cartItems.map((item, index) => (
-            <div key={index} className="p-4 border rounded shadow">
-              <img src={item.image} alt={item.name} className="h-32 w-full object-cover mb-4" />
-              <h3 className="text-xl font-semibold">{item.name}</h3>
-              <p className="text-gray-600">{item.description}</p>
-              <p className="text-sm text-gray-500">Price: {item.price}</p>
-              <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>Your cart is empty.</p>
-      )}
+      <div className="grid grid-cols-1 gap-4">
+        {cartItems.map((item, index) => (
+          <CartItem key={index} item={item} onRemove={() => handleRemoveItem(item)} />
+        ))}
+      </div>
     </div>
   );
 };
