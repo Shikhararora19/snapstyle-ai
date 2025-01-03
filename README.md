@@ -50,11 +50,25 @@ SnapStyle AI is an AI-powered web application that transforms your fashion inspi
 ### 🗄️ **Database**
 - **Firebase Firestore**: Storing cart and wishlist data.
 
+### 🌐 **APIs & Services**
+-**OpenAI**
+- **Azure**:  
+  - Used for advanced fetching and processesing of images efficiently to ensure accurate style recommendations.
+- **Cloudinary**:  
+  - Manages image storage and serves optimized image delivery for faster load times.  
+  - Ensures high-quality visuals across all devices.
+- **OpenCage API**:  
+  - Converts user-provided location data into precise geocoordinates.  
+  - Supports weather-based style recommendations by providing location details.
+- **WeatherData API**:  
+  - Fetches real-time weather conditions for users' locations.  
+  - Tailors style recommendations based on current weather conditions.
+
 ### 🌐 **Deployment**
 - **Netlify**: Continuous Deployment and hosting.
 
 ### 🧠 **Custom AI Models**
-- Utilizes advanced AI models for analyzing user-uploaded images.
+- Utilizes advanced OpenAI models for analyzing user-uploaded images.
 - Tailors style recommendations based on data from image analysis , occasion and weather.
 
 ---
