@@ -45,7 +45,7 @@ const Results: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="flex items-center justify-center min-h-screen from-green-100 via-blue-100 to-purple-100">
         <div className="text-center">
           <div className="loader mb-4"></div>
           <p className="text-lg text-gray-600">Fetching style recommendations...</p>
