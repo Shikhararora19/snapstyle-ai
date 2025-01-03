@@ -132,8 +132,12 @@ const Home: React.FC = () => {
           </button>
           <button
             onClick={handleGetStyles}
-            className="bg-blue-600 text-white px-6 py-3 mt-4 rounded-lg hover:bg-blue-700 transition duration-300"
-          >
+            disabled={!analyzedData}
+                className={`px-6 py-3 mt-4 rounded text-white ${
+                    analyzedData
+                    ? "bg-blue-500 hover:bg-blue-600"
+                    : "bg-gray-400 cursor-not-allowed"
+                }`}>
             Get Style Suggestions
           </button>
         </>

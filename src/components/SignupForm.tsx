@@ -20,42 +20,63 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 to-blue-300 animate-fade-in">
-      <h1 className="text-4xl font-bold mb-6 text-blue-700 hover:text-blue-900 transition duration-300">
-        Signup
-      </h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <form
-        onSubmit={handleSignup}
-        className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-96"
-      >
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="border p-3 rounded w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    <div className="min-h-screen flex flex-col md:flex-row">
+      {/* Left Section */}
+      <div className="bg-blue-200 w-full md:w-1/2 flex flex-col justify-center items-center p-8">
+      <h1 className="text-4xl font-extrabold text-gray-800 mb-6">
+        Join us today and elevate your wardrobe.
+        </h1>
+        <p className="text-lg text-gray-600 mb-8">
+        Experience a seamless way to find outfits that match your style and personality, powered by cutting-edge AI recommendations.
+        </p>
+        <img
+          src="/login.png"
+          alt="Signup illustration"
+          className="w-7/8 object-contain"
         />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="border p-3 rounded w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg w-full hover:bg-blue-700 transition duration-300"
+      </div>
+
+      {/* Right Section */}
+      <div className="flex-1 flex flex-col justify-center items-center bg-white p-10">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-700">Create Account</h2>
+          <p className="text-gray-500">Please fill the form to create your account</p>
+        </div>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <form
+          onSubmit={handleSignup}
+          className="w-full max-w-md bg-gray-50 p-6 rounded shadow-lg space-y-4"
         >
-          Signup
-        </button>
-      </form>
-      <button
-        onClick={() => navigate("/login")}
-        className="mt-4 text-blue-500 hover:underline"
-      >
-        Already have an account? Login
-      </button>
+          <input
+            type="email"
+            placeholder="Email address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full border rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full border rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-600 transition"
+          >
+            Signup
+          </button>
+        </form>
+        <div className="mt-6 flex justify-between items-center w-full max-w-md">
+          <p
+            className="text-blue-500 cursor-pointer hover:underline"
+            onClick={() => navigate("/login")}
+          >
+            Already have an account? Login
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
