@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
 
 export const handler: Handler = async (event) => {
   try {
-    const { amount, currency } = JSON.parse(event.body || "{}");
+    let { amount, currency } = JSON.parse(event.body || "{}");
 
     if (!amount || !currency) {
       return {
@@ -15,6 +15,7 @@ export const handler: Handler = async (event) => {
         body: JSON.stringify({ error: "Missing required fields." }),
       };
     }
+    amount = Math.round(amount);
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
