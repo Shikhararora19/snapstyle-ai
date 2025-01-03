@@ -53,6 +53,10 @@ SnapStyle AI is an AI-powered web application that transforms your fashion inspi
 ### 🌐 **Deployment**
 - **Netlify**: Continuous Deployment and hosting.
 
+### 🧠 **Custom AI Models**
+- Utilizes advanced AI models for analyzing user-uploaded images.
+- Tailors style recommendations based on data from image analysis , occasion and weather.
+
 ---
 
 ## 🖼️ Screenshots
