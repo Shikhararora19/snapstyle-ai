@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { addToCart } from "../firebase/cartService";
+import { addToWishlist } from "../firebase/wishlistService"; // Import the wishlist service
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase-config";
 import { ToastContainer, toast } from "react-toastify";
@@ -72,16 +73,46 @@ const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
     }
   };
 
+  const handleAddToWishlist = async () => {
+    if (user) {
+      const itemWithImage = {
+        ...style,
+        image: image || "", // Assign the fetched image URL to the item
+      };
+
+      await addToWishlist(user.uid, itemWithImage);
+      toast.success(`${style.name} added to your wishlist!`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: "colored",
+      });
+    } else {
+      toast.error("Please log in to add items to your wishlist.", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: "colored",
+      });
+    }
+  };
+
   return (
-    <div className="p-4 border rounded shadow-md hover:shadow-lg transition-shadow duration-300">
+    <div className="p-4 border rounded shadow-md hover:shadow-lg transition-shadow duration-300 bg-white">
       {image ? (
         <img
           src={image}
           alt={style.name}
-          className="w-full h-2/3 object-cover mb-4 rounded"
+          className="w-full h-60 object-cover mb-4 rounded"
         />
       ) : (
-        <div className="w-full h-48 bg-gray-200 flex items-center justify-center rounded mb-4">
+        <div className="w-full h-60 bg-gray-200 flex items-center justify-center rounded mb-4">
           <p className="text-gray-500">Loading image...</p>
         </div>
       )}
@@ -89,12 +120,20 @@ const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
       <p className="text-gray-600 mb-2">{style.description}</p>
       <p className="text-sm text-gray-500 mb-2">Type: {style.type}</p>
       <p className="text-sm text-gray-500 mb-4">Price: {style.price}</p>
-      <button
-        onClick={handleAddToCart}
-        className="bg-green-500 text-white px-4 py-2 mt-2 rounded hover:bg-green-600"
-      >
-        Add to Cart
-      </button>
+      <div className="flex justify-between">
+        <button
+          onClick={handleAddToCart}
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300"
+        >
+          Add to Cart
+        </button>
+        <button
+          onClick={handleAddToWishlist}
+          className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300"
+        >
+          Add to Wishlist
+        </button>
+      </div>
       <ToastContainer />
     </div>
   );

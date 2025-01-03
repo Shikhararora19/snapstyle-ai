@@ -77,6 +77,18 @@ const Results: React.FC = () => {
   <span className="sr-only">View Cart</span>
 </button>
 
+        {/* wishlist button */}
+        <button
+          onClick={() => navigate("/wishlist")}
+          className="absolute top-4 right-16 bg-blue-200 text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-blue-300 shadow-lg"
+        >
+            <img
+                src="/wishlist.svg" // Path to your SVG in the public folder
+                alt="Wishlist Icon"
+                className="w-6 h-6"
+            />
+            <span className="sr-only">View Wishlist</span>
+        </button>  
 
 
       {/* Weather Widget */}

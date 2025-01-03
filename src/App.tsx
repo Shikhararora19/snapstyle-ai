@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Results from "./pages/Results";
 import Cart from "./components/Cart";
+import Wishlist from "./pages/Wishlist";
 import ProtectedRoute from "./ProtectedRoute";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentFailure from "./pages/PaymentFailure";
@@ -36,6 +37,11 @@ const App: React.FC = () => {
         <Route path="/cart" element={
             <ProtectedRoute>
                 <Cart />
+            </ProtectedRoute>
+        } />
+        <Route path="/wishlist" element={
+            <ProtectedRoute>
+                <Wishlist />
             </ProtectedRoute>
         } />
         <Route path='/payment-success' element={
