@@ -1,6 +1,9 @@
 import React from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
+import { clearCart } from "../firebase/cartService"; // Import the clearCart function
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase/firebase-config";
 
 interface CheckoutFormProps {
   totalAmount: number;
@@ -10,6 +13,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ totalAmount }) => {
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
+  const [user] = useAuthState(auth);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -39,6 +43,12 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ totalAmount }) => {
         navigate("/payment-failure"); // Navigate to the failure page
       } else {
         alert("Payment succeeded!");
+
+        // Clear the cart in the database
+        if (user) {
+          await clearCart(user.uid); // Clear the user's cart
+        }
+
         navigate("/payment-success"); // Navigate to the success page
       }
     } catch (error) {

@@ -41,3 +41,14 @@ export const removeFromCart = async (userId: string, itemName: string) => {
     await updateDoc(cartRef, { items: updatedItems });
   }
 };
+
+export const clearCart = async (userId: string) => {
+  const cartRef = doc(db, "Cart", userId);
+
+  try {
+    // Overwrite the cart with an empty array of items
+    await setDoc(cartRef, { items: [] });
+  } catch (error) {
+    console.error("Error clearing cart:", error);
+  }
+};
