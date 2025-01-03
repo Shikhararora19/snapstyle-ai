@@ -27,7 +27,7 @@ const Login: React.FC = () => {
         Transform Your Style with AI.
         </h1>
         <p className="text-lg text-gray-600 mb-8">
-        Upload your outfit inspiration and let our AI recommend the perfect styles for you. Shopping for fashion has never been smarter!
+        Shopping for fashion has never been smarter!
         </p>
         <img
           src="/login.png"

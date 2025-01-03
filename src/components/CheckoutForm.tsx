@@ -66,8 +66,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ totalAmount }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded">
-      <CardElement className="border p-2 rounded" />
+    <form onSubmit={handleSubmit} className="p-4 border rounded bg-gradient-to-r from-green-100 via-blue-100 to-purple-100">
+      <CardElement className="border p-2 rounded bg-gradient-to-r from-green-100 via-blue-100 to-purple-100" />
       <button
         type="submit"
         disabled={!stripe || isProcessing}

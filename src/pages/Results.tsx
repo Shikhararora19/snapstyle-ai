@@ -63,7 +63,7 @@ const Results: React.FC = () => {
   }
 
   return (
-    <div className="relative">
+    <div className="relative bg-gradient-to-r from-green-100 via-blue-100 to-purple-100">
       {/* Cart Button */}
       <button
   onClick={() => navigate("/cart")}

@@ -78,7 +78,7 @@ const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
         <img
           src={image}
           alt={style.name}
-          className="w-full h-48 object-cover mb-4 rounded"
+          className="w-full h-2/3 object-cover mb-4 rounded"
         />
       ) : (
         <div className="w-full h-48 bg-gray-200 flex items-center justify-center rounded mb-4">

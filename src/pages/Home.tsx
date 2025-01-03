@@ -75,38 +75,57 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-blue-50 to-blue-100">
-      <header className="text-center py-10">
-        <h1 className="text-6xl font-bold text-blue-700 hover:text-blue-900 transition duration-300">
+    <div className="flex min-h-screen">
+      {/* Left Section */}
+      <div className="w-1/2 bg-gradient-to-r from-purple-100 via-pink-100 to-yellow-100 flex flex-col justify-center items-center p-8">
+        <h1 className="text-4xl font-extrabold text-purple-700 mb-6">
+          Discover AI-Powered Fashion
+        </h1>
+        <p className="text-lg text-gray-600 text-center">
+          Upload your outfit inspiration, and let our AI recommend the perfect styles for you.
+          Experience personalized fashion like never before.
+        </p>
+        <img
+          src="/home.png" // Replace with the path to your illustration
+          alt="Fashion AI Illustration"
+          className="mt-8 max-w-sm"
+        />
+      </div>
+
+      {/* Right Section */}
+      <div className="w-1/2 bg-gradient-to-r from-green-100 via-blue-100 to-purple-100 flex flex-col items-center p-6">
+        <h1 className="text-6xl font-extrabold text-blue-700 mb-10 hover:text-blue-900 transition duration-300">
           SnapStyle AI
         </h1>
-        <p className="text-xl text-gray-600 mt-2">
-          Upload your outfit inspiration and let AI style you!
-        </p>
-      </header>
-
-      <main className="flex flex-col items-center w-full max-w-4xl">
         {user ? (
           <>
-            <LogoutButton />
-            <div className="my-6">
-              <FileUpload setImageUrl={setImageUrl} />
+            <div className="absolute top-6 right-6">
+              <LogoutButton />
             </div>
+            <div className="mb-8">
+              <p className="text-xl font-medium text-gray-700">Logged in as:</p>
+              <p className="text-gray-600">{user.email}</p>
+            </div>
+            <FileUpload setImageUrl={setImageUrl} />
             {imageUrl && (
-              <div className="flex flex-col items-center mt-4">
+              <div className="mt-6">
+                <p className="text-gray-600">Uploaded Image:</p>
                 <img
                   src={imageUrl}
                   alt="Uploaded Preview"
-                  className="max-w-xs rounded-lg shadow-lg"
+                  className="mt-2 max-w-xs border rounded-lg shadow"
                 />
               </div>
             )}
-            {weatherData && <WeatherWidget weather={weatherData} />}
-
-            <div className="w-full mt-6">
+            {weatherData && (
+              <div className="mt-6">
+                <WeatherWidget weather={weatherData} />
+              </div>
+            )}
+            <div className="mt-6">
               <label
                 htmlFor="occasion"
-                className="block text-lg font-medium text-gray-700 mb-2"
+                className="block text-gray-700 font-medium mb-2"
               >
                 Select an Occasion:
               </label>
@@ -114,7 +133,7 @@ const Home: React.FC = () => {
                 id="occasion"
                 value={occasion}
                 onChange={(e) => setOccasion(e.target.value)}
-                className="border border-gray-300 p-3 rounded w-full focus:ring-2 focus:ring-blue-500"
+                className="border p-3 rounded w-full focus:ring-2 focus:ring-blue-500"
               >
                 <option value="Casual">Casual</option>
                 <option value="Formal">Formal</option>
@@ -122,11 +141,10 @@ const Home: React.FC = () => {
                 <option value="Work">Work</option>
               </select>
             </div>
-
-            <div className="flex flex-col items-center mt-6 space-y-4">
+            <div className="flex gap-4 mt-6">
               <button
                 onClick={handleAnalyzeImage}
-                className={`bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-all duration-300 ${
+                className={`bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300 ${
                   isAnalyzing ? "opacity-50 cursor-not-allowed" : ""
                 }`}
                 disabled={isAnalyzing}
@@ -136,9 +154,9 @@ const Home: React.FC = () => {
               <button
                 onClick={handleGetStyles}
                 disabled={!analyzedData}
-                className={`bg-blue-500 text-white px-6 py-3 rounded-lg ${
+                className={`px-6 py-3 rounded text-white ${
                   analyzedData
-                    ? "hover:bg-blue-600 transition-all duration-300"
+                    ? "bg-blue-500 hover:bg-blue-600"
                     : "bg-gray-400 cursor-not-allowed"
                 }`}
               >
@@ -147,9 +165,9 @@ const Home: React.FC = () => {
             </div>
           </>
         ) : (
-          <p className="text-red-500 mt-6">Please log in to access this feature.</p>
+          <p className="text-red-500 text-xl">Please log in to access this feature.</p>
         )}
-      </main>
+      </div>
     </div>
   );
 };
