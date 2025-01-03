@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { addToCart } from "../firebase/cartService";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase-config";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface StyleCardProps {
   style: {
@@ -48,9 +50,25 @@ const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
       };
 
       await addToCart(user.uid, itemWithImage);
-      alert("Added to cart!");
+      toast.success(`${style.name} added to your cart!`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: "colored",
+      });
     } else {
-      alert("Please log in to add items to your cart.");
+      toast.error("Please log in to add items to your cart.", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: "colored",
+      });
     }
   };
 
@@ -77,6 +95,7 @@ const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
       >
         Add to Cart
       </button>
+      <ToastContainer />
     </div>
   );
 };

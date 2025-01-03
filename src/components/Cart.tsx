@@ -21,7 +21,7 @@ const Cart: React.FC = () => {
       // Calculate the total price of items in the cart
       const total = items.reduce((sum: number, product: any) => {
         const price = parseFloat(product.price.replace("$", ""));
-        return sum + price * product.quantity;
+        return (sum + price * product.quantity);
       }, 0);
       setTotalPrice(total);
     }
@@ -75,7 +75,7 @@ const Cart: React.FC = () => {
 
           {showCheckout && (
             <Elements stripe={stripePromise}>
-              <CheckoutForm totalAmount={totalPrice} />
+              <CheckoutForm totalAmount={parseFloat(totalPrice.toFixed(2))} />
             </Elements>
           )}
         </>

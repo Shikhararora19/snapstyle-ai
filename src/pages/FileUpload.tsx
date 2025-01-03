@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 interface FileUploadProps {
@@ -6,8 +6,11 @@ interface FileUploadProps {
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({ setImageUrl }) => {
+  const [isUploading, setIsUploading] = useState(false);
+
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
+      setIsUploading(true);
       const formData = new FormData();
       formData.append("file", event.target.files[0]);
       formData.append("upload_preset", "Snapstyle");
@@ -20,6 +23,8 @@ const FileUpload: React.FC<FileUploadProps> = ({ setImageUrl }) => {
         setImageUrl(response.data.secure_url);
       } catch (error) {
         console.error("Upload error:", error);
+      } finally {
+        setIsUploading(false);
       }
     }
   };
@@ -28,9 +33,11 @@ const FileUpload: React.FC<FileUploadProps> = ({ setImageUrl }) => {
     <div className="flex flex-col items-center mt-4">
       <label
         htmlFor="file-upload"
-        className="cursor-pointer bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
+        className={`cursor-pointer bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ${
+          isUploading ? "opacity-50 cursor-not-allowed" : ""
+        }`}
       >
-        Upload Image
+        {isUploading ? "Uploading..." : "Upload Image"}
       </label>
       <input
         id="file-upload"
@@ -38,6 +45,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ setImageUrl }) => {
         onChange={handleUpload}
         accept="image/*"
         className="hidden"
+        disabled={isUploading}
       />
     </div>
   );
