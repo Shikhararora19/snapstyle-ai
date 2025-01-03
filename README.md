@@ -65,10 +65,10 @@ SnapStyle AI is an AI-powered web application that transforms your fashion inspi
 ![Homepage](./public/screenshots/homepage.png)
 
 ### Results Page
-![Results Page](./public/screenshots/results.png)
+![Results Page](./public/screenshots/Results.png)
 
 ### Wishlist
-![Wishlist](./public/screenshots/wishlist.png)
+![Wishlist](./public/screenshots/Wishlist.png)
 
 ### Cart
 ![Cart](./public/screenshots/cart.png)
