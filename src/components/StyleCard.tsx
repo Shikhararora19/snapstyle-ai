@@ -104,12 +104,12 @@ const StyleCard: React.FC<StyleCardProps> = ({ style }) => {
   };
 
   return (
-    <div className="p-4 border rounded shadow-md hover:shadow-lg transition-shadow duration-300 bg-white">
+    <div className="p-3 border rounded shadow-md hover:shadow-lg transition-shadow duration-300 bg-gradient-to-r from-green-100 via-blue-100 to-purple-100">
       {image ? (
         <img
           src={image}
           alt={style.name}
-          className="w-full h-2/3 object-cover mb-4 rounded"
+          className="w-full h-80 object-cover mb-4 rounded"
         />
       ) : (
         <div className="w-full h-60 bg-gray-200 flex items-center justify-center rounded mb-4">
