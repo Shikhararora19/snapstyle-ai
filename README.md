@@ -2,6 +2,17 @@
 
 SnapStyle AI is an AI-powered web application that transforms your fashion inspiration into personalized style recommendations. 🌟 Whether you're looking for outfits for a specific occasion or just want to explore trends, SnapStyle AI has you covered. 🚀
 
+![React](https://img.shields.io/badge/Frontend-React-blue?style=for-the-badge&logo=react)
+![TailwindCSS](https://img.shields.io/badge/Styling-TailwindCSS-green?style=for-the-badge&logo=tailwindcss)
+![Node.js](https://img.shields.io/badge/Backend-Node.js-brightgreen?style=for-the-badge&logo=node.js)
+![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue?style=for-the-badge&logo=typescript)
+![Firebase](https://img.shields.io/badge/Database-Firebase-orange?style=for-the-badge&logo=firebase)
+![Stripe](https://img.shields.io/badge/Payment-Stripe-red?style=for-the-badge&logo=stripe)
+![Netlify](https://img.shields.io/badge/Hosting-Netlify-yellow?style=for-the-badge&logo=netlify)
+![OpenAI](https://img.shields.io/badge/AI-OpenAI-black?style=for-the-badge&logo=openai)
+![Azure](https://img.shields.io/badge/Services-Azure-blue?style=for-the-badge&logo=microsoftazure)
+![Cloudinary](https://img.shields.io/badge/Image%20Management-Cloudinary-lightblue?style=for-the-badge&logo=cloudinary)
+
 ---
 
 ## 🔗 Live Demo
@@ -37,35 +48,30 @@ SnapStyle AI is an AI-powered web application that transforms your fashion inspi
 ## 🏗️ Tech Stack
 
 ### 🖼️ **Frontend**
-- **React**: Component-based architecture.
-- **Tailwind CSS**: Styling and responsive design.
-- **React Toastify**: User notifications.
+- ![React](https://img.shields.io/badge/React.js-blue?style=flat-square&logo=react) **React.js**: Component-based architecture for building the user interface.
+- ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-green?style=flat-square&logo=tailwindcss) **Tailwind CSS**: Modern styling with responsive design.
+- **React Toastify**: Provides user-friendly notifications.
 
 ### ⚙️ **Backend**
-- **Node.js**: High-performance server-side runtime for executing server-side JavaScript code.
-- **TypeScript**: Static typing for enhanced developer experience and maintainability.
-- **Netlify Functions**: Serverless architecture for API endpoints.
-- **Stripe API**: Payment gateway.
+- ![Node.js](https://img.shields.io/badge/Node.js-brightgreen?style=flat-square&logo=node.js) **Node.js**: Handles backend logic and server-side operations.
+- ![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=flat-square&logo=typescript) **TypeScript**: Enhances code quality with static typing.
+- ![Netlify](https://img.shields.io/badge/Netlify_Functions-yellow?style=flat-square&logo=netlify) **Netlify Functions**: Manages serverless API endpoints.
+- ![Stripe](https://img.shields.io/badge/Stripe-red?style=flat-square&logo=stripe) **Stripe API**: Secure and seamless payment processing.
+
 
 ### 🗄️ **Database**
-- **Firebase Firestore**: Storing cart and wishlist data.
+- ![Firebase](https://img.shields.io/badge/Firebase-orange?style=flat-square&logo=firebase) **Firebase Firestore**: Efficient storage for cart and wishlist data.
 
 ### 🌐 **APIs & Services**
--**OpenAI**
-- **Azure**:  
-  - Used for advanced fetching and processesing of images efficiently to ensure accurate style recommendations.
-- **Cloudinary**:  
-  - Manages image storage and serves optimized image delivery for faster load times.  
-  - Ensures high-quality visuals across all devices.
-- **OpenCage API**:  
-  - Converts user-provided location data into precise geocoordinates.  
-  - Supports weather-based style recommendations by providing location details.
-- **WeatherData API**:  
-  - Fetches real-time weather conditions for users' locations.  
-  - Tailors style recommendations based on current weather conditions.
+- ![OpenAI](https://img.shields.io/badge/OpenAI-black?style=flat-square&logo=openai) **OpenAI API**: Advanced AI capabilities for personalized recommendations.
+- ![Azure](https://img.shields.io/badge/Azure-blue?style=flat-square&logo=microsoftazure) **Azure Services**: Fast and efficient image processing.
+- ![Cloudinary](https://img.shields.io/badge/Cloudinary-lightblue?style=flat-square&logo=cloudinary) **Cloudinary**: Manages image storage and delivery.
+- ![OpenCage](https://img.shields.io/badge/OpenCage-grey?style=flat-square&logo=geocaching) **OpenCage API**: Converts location data into geocoordinates for weather integration.
+- ![WeatherData](https://img.shields.io/badge/Weather_API-blue?style=flat-square&logo=weather) **WeatherData API**: Provides real-time weather information for contextual style recommendations.
+
 
 ### 🌐 **Deployment**
-- **Netlify**: Continuous Deployment and hosting.
+- ![Netlify](https://img.shields.io/badge/Netlify-yellow?style=flat-square&logo=netlify) **Netlify**: Continuous Deployment and hosting.
 
 ### 🧠 **Custom AI Models**
 - Utilizes advanced OpenAI models for analyzing user-uploaded images.
